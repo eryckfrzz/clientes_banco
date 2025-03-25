@@ -16,13 +16,6 @@ class ClientsPage extends StatefulWidget {
 }
 
 class _ClientsPageState extends State<ClientsPage> {
-  List<ClientType> types = [
-    ClientType(name: 'Platinum', icon: Icons.credit_card),
-    ClientType(name: 'Golden', icon: Icons.card_membership),
-    ClientType(name: 'Titanium', icon: Icons.credit_score),
-    ClientType(name: 'Diamond', icon: Icons.diamond),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +64,8 @@ class _ClientsPageState extends State<ClientsPage> {
   void createType(context) {
     TextEditingController nomeInput = TextEditingController();
     TextEditingController emailInput = TextEditingController();
-    ClientType dropdownValue = types[0];
+    Types listTypes = Provider.of<Types>(context, listen: false);
+    ClientType dropdownValue = listTypes.types[0];
 
     showDialog(
       context: context,
@@ -101,8 +95,8 @@ class _ClientsPageState extends State<ClientsPage> {
                     ),
                   ),
                   const Padding(padding: EdgeInsets.all(5)),
-                  Consumer<ClientsTypes>(
-                    builder: (BuildContext context, ClientsTypes types, Widget? widget) {
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setState) {
                       return DropdownButton(
                         isExpanded: true,
                         value: dropdownValue,
@@ -115,7 +109,7 @@ class _ClientsPageState extends State<ClientsPage> {
                           });
                         },
                         items:
-                            types.map((ClientType type) {
+                            listTypes.types.map((ClientType type) {
                               return DropdownMenuItem<ClientType>(
                                 value: type,
                                 child: Text(type.name),
@@ -129,12 +123,11 @@ class _ClientsPageState extends State<ClientsPage> {
             ),
           ),
           actions: [
-            Consumer<Clients>(
-              builder: (BuildContext context, Clients list, Widget? widget) {
-                return TextButton(
+
+                TextButton(
                   child: const Text("Salvar"),
                   onPressed: () async {
-                    list.addClient(
+                    Provider.of<Clients>(context, listen: false).addClient(
                       Client(
                         name: nomeInput.text,
                         email: emailInput.text,
@@ -143,9 +136,7 @@ class _ClientsPageState extends State<ClientsPage> {
                     );
                     Navigator.pop(context);
                   },
-                );
-              },
-            ),
+                ),
 
             TextButton(
               child: const Text("Cancelar"),

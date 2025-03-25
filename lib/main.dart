@@ -1,3 +1,4 @@
+import 'package:controle_clientes/models/client_type.dart';
 import 'package:controle_clientes/models/clients.dart';
 import 'package:controle_clientes/models/types.dart';
 import 'package:controle_clientes/pages/client_types_page.dart';
@@ -7,11 +8,19 @@ import 'pages/clients_page.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) {
-        Clients([]);
-        ClientsTypes([]);
-      },
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Clients>(create: (context) => Clients([])),
+        ChangeNotifierProvider<Types>(
+          create:
+              (context) => Types([
+                ClientType(name: 'Platinum', icon: Icons.credit_card),
+                ClientType(name: 'Golden', icon: Icons.card_membership),
+                ClientType(name: 'Titanium', icon: Icons.credit_score),
+                ClientType(name: 'Diamond', icon: Icons.diamond),
+              ]),
+        ),
+      ],
       child: const MyApp(),
     ),
   );
