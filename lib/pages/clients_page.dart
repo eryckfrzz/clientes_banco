@@ -21,8 +21,12 @@ class _ClientsPageState extends State<ClientsPage> {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       drawer: const HamburgerMenu(),
+
+      //consumer
       body: Consumer<Clients>(
         builder: (BuildContext context, Clients list, Widget? widget) {
+
+          //lista dos usuários
           return ListView.builder(
             itemCount: list.clients.length,
             itemBuilder: (context, index) {
@@ -33,15 +37,15 @@ class _ClientsPageState extends State<ClientsPage> {
                   leading: Icon(list.clients[index].type.icon),
                   title: Text(
                     list.clients[index].name +
-                        ' (' +
-                        list.clients[index].type.name +
-                        ')',
+                        ' ('+list.clients[index].type.name+')',
                   ),
                   iconColor: Colors.indigo,
                 ),
+
+                //remover o usuário arrastando para o lado
                 onDismissed: (direction) {
                   setState(() {
-                    list.clients.removeAt(index);
+                    list.remove(index);
                   });
                 },
               );
@@ -61,6 +65,7 @@ class _ClientsPageState extends State<ClientsPage> {
     );
   }
 
+  //card para cadastrar um novo cliente
   void createType(context) {
     TextEditingController nomeInput = TextEditingController();
     TextEditingController emailInput = TextEditingController();
@@ -108,6 +113,8 @@ class _ClientsPageState extends State<ClientsPage> {
                             dropdownValue = newValue as ClientType;
                           });
                         },
+
+                        //list que vai percorrer todos os noemes de ícones disponíveis
                         items:
                             listTypes.types.map((ClientType type) {
                               return DropdownMenuItem<ClientType>(

@@ -22,8 +22,12 @@ class _ClientTypesPageState extends State<ClientTypesPage> {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       drawer: const HamburgerMenu(),
+
+      //consumer
       body: Consumer(
         builder: (BuildContext context, Types list, Widget? widget) {
+
+          //lista de ícones
           return ListView.builder(
             itemCount: list.types.length,
             itemBuilder: (context, index) {
@@ -35,9 +39,11 @@ class _ClientTypesPageState extends State<ClientTypesPage> {
                   title: Text(list.types[index].name),
                   iconColor: Colors.deepOrange,
                 ),
+
+                //remover o usuário arrastando para o lado
                 onDismissed: (direction) {
                   setState(() {
-                    list.types.removeAt(index);
+                    list.remove(index);
                   });
                 },
               );
@@ -57,6 +63,7 @@ class _ClientTypesPageState extends State<ClientTypesPage> {
     );
   }
 
+  //card para cadastrar um novo tipo
   void createType(context) {
     TextEditingController nomeInput = TextEditingController();
 
@@ -84,6 +91,8 @@ class _ClientTypesPageState extends State<ClientTypesPage> {
                     builder: (BuildContext context, StateSetter setState) {
                       return Column(
                         children: [
+
+                          //lógica para adição de um novo ícone
                           const Padding(padding: EdgeInsets.all(5)),
                           selectedIcon != null
                               ? Icon(selectedIcon, color: Colors.deepOrange)
