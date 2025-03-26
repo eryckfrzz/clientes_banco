@@ -20,7 +20,7 @@ class _ClientTypesPageState extends State<ClientTypesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(title: Text(widget.title), backgroundColor: Colors.indigo,),
       drawer: const HamburgerMenu(),
 
       //consumer

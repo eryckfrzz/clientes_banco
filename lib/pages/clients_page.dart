@@ -19,13 +19,17 @@ class _ClientsPageState extends State<ClientsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+        title: Text(
+          widget.title,
+        ),
+        backgroundColor: Colors.indigo,
+      ),
       drawer: const HamburgerMenu(),
 
       //consumer
       body: Consumer<Clients>(
         builder: (BuildContext context, Clients list, Widget? widget) {
-
           //lista dos usuários
           return ListView.builder(
             itemCount: list.clients.length,
@@ -37,7 +41,9 @@ class _ClientsPageState extends State<ClientsPage> {
                   leading: Icon(list.clients[index].type.icon),
                   title: Text(
                     list.clients[index].name +
-                        ' ('+list.clients[index].type.name+')',
+                        ' (' +
+                        list.clients[index].type.name +
+                        ')',
                   ),
                   iconColor: Colors.indigo,
                 ),
@@ -130,20 +136,19 @@ class _ClientsPageState extends State<ClientsPage> {
             ),
           ),
           actions: [
-
-                TextButton(
-                  child: const Text("Salvar"),
-                  onPressed: () async {
-                    Provider.of<Clients>(context, listen: false).addClient(
-                      Client(
-                        name: nomeInput.text,
-                        email: emailInput.text,
-                        type: dropdownValue,
-                      ),
-                    );
-                    Navigator.pop(context);
-                  },
-                ),
+            TextButton(
+              child: const Text("Salvar"),
+              onPressed: () async {
+                Provider.of<Clients>(context, listen: false).addClient(
+                  Client(
+                    name: nomeInput.text,
+                    email: emailInput.text,
+                    type: dropdownValue,
+                  ),
+                );
+                Navigator.pop(context);
+              },
+            ),
 
             TextButton(
               child: const Text("Cancelar"),
